@@ -1,6 +1,7 @@
 # vue-test
 
-> A Vue.js project
+> A Vue.js project for test technical
+> By huulai
 
 ## Build Setup
 
