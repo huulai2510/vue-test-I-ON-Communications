@@ -14,12 +14,16 @@
       </thead>
       <tbody>
         <template v-for="(item, key) in data.rows">
-          <tr class="head" :key="key">
+          <tr class="head" :key="key" @click="selectContent(key)" style="cursor: pointer">
             <td>{{item.title.order}}</td>
             <td>{{item.title.type}}</td>
             <td>{{item.title.question}}</td>
           </tr>
-          <tr class="body active" :key="`${key}_${content}`" >
+          <tr
+            class="body active"
+            :key="`${key}_${content}`"
+            v-if="key === selectRow"
+          >
             <td colspan="3">
               <div class="answer img-preview" :id="key" v-html="item.content">
               </div>
@@ -48,6 +52,11 @@ export default {
   mounted () {
     this.data.columns = [ ...jsonData.columns ]
     this.data.rows = [ ...jsonData.rows ]
+  },
+  methods: {
+    selectContent (key) {
+      this.selectRow = this.selectRow === key ? -1 : key
+    }
   }
 }
 </script>
