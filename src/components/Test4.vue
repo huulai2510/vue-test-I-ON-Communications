@@ -1,7 +1,7 @@
 <template>
-  <div class="table-wrap coltype" style="width: 50%; margin: 20px auto">
+  <div class="table-wrap coltype" style="width: 50%">
 
-    <input type="text" class="form-control m-0" >
+    <input type="text" class="form-control m-0"  v-model="search">
     <table class="table ui-accordion">
       <caption></caption>
       <colgroup>
@@ -15,8 +15,7 @@
       </tr>
       </thead>
       <tbody>
-
-        <tr class="head" v-for="(item, index) in rows" :key="index">
+        <tr class="head" v-for="(item, key) in filterList" :key="key">
           <td>{{item.order}}</td>
           <td>{{item.type}}</td>
           <td>{{item.question}}</td>
@@ -48,6 +47,17 @@ export default {
   computed: {
     rows () {
       return this.data.rows || []
+    },
+    filterList () {
+      let {rows, search} = this
+      rows = rows.filter(item => {
+        return (
+          item.order.toString().indexOf(search.toLowerCase()) > -1 ||
+          item.type.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+          item.question.toLowerCase().indexOf(search.toLowerCase()) > -1
+        )
+      })
+      return rows
     }
   }
 }
